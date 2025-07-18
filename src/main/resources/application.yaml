@@ -1,0 +1,97 @@
+# Configuration pour développement (par défaut)
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: backend-api
+  
+  # Base de données H2 pour développement
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  
+  # Configuration JPA/Hibernate
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+  
+  # Console H2 pour le debug
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+  
+  # Configuration CORS
+  web:
+    cors:
+      allowed-origins: "http://localhost:4200"
+      allowed-methods: "*"
+      allowed-headers: "*"
+      allow-credentials: true
+
+# Documentation OpenAPI/Swagger
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+
+# Logs
+logging:
+  level:
+    com.example: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+---
+# Profil pour MySQL (production)
+#spring:
+#  config:
+#    activate:
+#      on-profile: mysql
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/backend_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: ${DB_USERNAME:root}
+#    password: ${DB_PASSWORD:password}
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
+#    hibernate:
+#      ddl-auto: validate
+#  h2:
+#    console:
+#      enabled: false
+
+---
+# Profil pour PostgreSQL (production)
+#spring:
+#  config:
+#    activate:
+#      on-profile: postgres
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/backend_db
+#    driver-class-name: org.postgresql.Driver
+#    username: ${DB_USERNAME:postgres}
+#    password: ${DB_PASSWORD:password}
+#  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    hibernate:
+#      ddl-auto: validate
+#  h2:
+#    console:
+#      enabled: false
